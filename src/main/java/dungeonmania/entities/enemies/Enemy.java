@@ -7,9 +7,11 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.Player;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
+import dungeonmania.movement.MovementBehaviour;
 
 public abstract class Enemy extends Entity implements Battleable {
     private BattleStatistics battleStatistics;
+    private MovementBehaviour movementBehaviour;
 
     public Enemy(Position position, double health, double attack) {
         super(position.asLayer(Entity.CHARACTER_LAYER));
@@ -41,5 +43,25 @@ public abstract class Enemy extends Entity implements Battleable {
         g.unsubscribe(getId());
     }
 
-    public abstract void move(Game game);
+    @Override
+    public void onMovedAway(GameMap map, Entity entity) {
+        return;
+    }
+
+    /**
+     * set the movement strategy for the enemy
+     * @param movementBehaviour
+     */
+    public void setMovementBehaviour(MovementBehaviour movementBehaviour) {
+        this.movementBehaviour = movementBehaviour;
+    }
+
+    public void move(Game game) {
+        Position nextPos = movementBehaviour.move(this, game);
+        game.getMap().moveTo(this, nextPos);
+    }
+
+    public MovementBehaviour getMovementBehaviour() {
+        return movementBehaviour;
+    }
 }
