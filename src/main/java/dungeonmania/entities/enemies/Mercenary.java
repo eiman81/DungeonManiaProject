@@ -90,7 +90,7 @@ public class Mercenary extends Enemy implements Interactable {
         } else {
             // Use the strategy to get the next position
             chooseMovementBehaviour(map);
-            nextPos = movementBehaviour.move(this, map);
+            nextPos = getMovementBehaviour().move(this, map);
         }
         map.moveTo(this, nextPos);
     }
