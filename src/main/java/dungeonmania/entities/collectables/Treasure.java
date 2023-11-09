@@ -24,4 +24,5 @@ public class Treasure extends Entity implements InventoryItem {
             map.destroyEntity(this);
         }
     }
+
 }

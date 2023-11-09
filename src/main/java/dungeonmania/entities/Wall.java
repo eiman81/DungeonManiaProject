@@ -13,5 +13,4 @@ public class Wall extends Entity {
     public boolean canMoveOnto(GameMap map, Entity entity) {
         return entity instanceof Spider;
     }
-
 }
