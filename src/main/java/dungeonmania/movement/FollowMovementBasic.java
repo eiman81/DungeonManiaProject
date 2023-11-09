@@ -1,5 +1,6 @@
 package dungeonmania.movement;
 
+import dungeonmania.Game;
 import dungeonmania.entities.enemies.Enemy;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Direction;
@@ -7,8 +8,8 @@ import dungeonmania.util.Position;
 
 public class FollowMovementBasic implements MovementBehaviour {
     @Override
-    public Position move(Enemy enemy, GameMap map) {
-
+    public Position move(Enemy enemy, Game game) {
+        GameMap map = game.getMap();
         Position currPos = enemy.getPosition();
         Position plrDiff = Position.calculatePositionBetween(map.getPlayer().getPosition(), currPos);
 

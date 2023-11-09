@@ -57,7 +57,7 @@ public abstract class Enemy extends Entity implements Battleable {
     }
 
     public void move(Game game) {
-        Position nextPos = movementBehaviour.move(this, game.getMap());
+        Position nextPos = movementBehaviour.move(this, game);
         game.getMap().moveTo(this, nextPos);
     }
 

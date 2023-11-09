@@ -2,6 +2,7 @@ package dungeonmania.movement;
 
 import java.util.List;
 
+import dungeonmania.Game;
 import dungeonmania.entities.Boulder;
 import dungeonmania.entities.enemies.Enemy;
 import dungeonmania.util.Position;
@@ -26,8 +27,9 @@ public class SpiderMovement implements MovementBehaviour {
     }
 
     @Override
-    public Position move(Enemy enemy, GameMap map) {
+    public Position move(Enemy enemy, Game game) {
         Position nextPos = movementTrajectory.get(nextPositionElement);
+        GameMap map = game.getMap();
         List<Entity> entities = map.getEntities(nextPos);
         if (entities != null && entities.size() > 0 && entities.stream().anyMatch(e -> e instanceof Boulder)) {
             forward = !forward;

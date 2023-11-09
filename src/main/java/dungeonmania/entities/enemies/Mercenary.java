@@ -10,7 +10,7 @@ import dungeonmania.entities.collectables.potions.InvincibilityPotion;
 import dungeonmania.entities.collectables.potions.InvisibilityPotion;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
-
+import dungeonmania.movement.AlliedMovement;
 import dungeonmania.movement.FollowMovementBasic;
 import dungeonmania.movement.FollowMovementDijkstra;
 import dungeonmania.movement.RandomMovement;
@@ -73,30 +73,23 @@ public class Mercenary extends Enemy implements Interactable {
     public void interact(Player player, Game game) {
         allied = true;
         bribe(player);
-        if (!isAdjacentToPlayer && Position.isAdjacent(player.getPosition(), getPosition()))
-            isAdjacentToPlayer = true;
+        updateIsAdjacentToPlayer(getPosition(), player);
     }
 
     @Override
     public void move(Game game) {
+        // Use the strategy to get the next position
         Position nextPos;
         GameMap map = game.getMap();
-        Player player = game.getPlayer();
-        if (allied) {
-            nextPos = isAdjacentToPlayer ? player.getPreviousDistinctPosition()
-                    : map.dijkstraPathFind(getPosition(), player.getPosition(), this);
-            if (!isAdjacentToPlayer && Position.isAdjacent(player.getPosition(), nextPos))
-                isAdjacentToPlayer = true;
-        } else {
-            // Use the strategy to get the next position
-            chooseMovementBehaviour(map);
-            nextPos = getMovementBehaviour().move(this, map);
-        }
+        chooseMovementBehaviour(map);
+        nextPos = getMovementBehaviour().move(this, game);
         map.moveTo(this, nextPos);
     }
 
     public void chooseMovementBehaviour(GameMap map) {
-        if (map.getPlayer().getEffectivePotion() instanceof InvisibilityPotion) {
+        if (allied) {
+            setMovementBehaviour(new AlliedMovement(isAdjacentToPlayer));
+        } else if (map.getPlayer().getEffectivePotion() instanceof InvisibilityPotion) {
             setMovementBehaviour(new RandomMovement());
         } else if (map.getPlayer().getEffectivePotion() instanceof InvincibilityPotion) {
             setMovementBehaviour(new FollowMovementBasic());
@@ -115,5 +108,16 @@ public class Mercenary extends Enemy implements Interactable {
         if (!allied)
             return super.getBattleStatistics();
         return new BattleStatistics(0, allyAttack, allyDefence, 1, 1);
+    }
+
+    /**
+     * update whether the merc is adjacent to the player
+     * @param nextPos
+     * @param player
+     */
+    public void updateIsAdjacentToPlayer(Position nextPos, Player player) {
+        if (!isAdjacentToPlayer && Position.isAdjacent(player.getPosition(), nextPos)) {
+            isAdjacentToPlayer = true;
+        }
     }
 }

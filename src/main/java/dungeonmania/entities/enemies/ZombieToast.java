@@ -21,7 +21,7 @@ public class ZombieToast extends Enemy {
         GameMap map = game.getMap();
         // Use the strategy to get the next position
         chooseMovementBehaviour(map);
-        Position nextPos = getMovementBehaviour().move(this, map);
+        Position nextPos = getMovementBehaviour().move(this, game);
         map.moveTo(this, nextPos);
     }
 
