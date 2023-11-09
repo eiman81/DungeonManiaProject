@@ -97,7 +97,6 @@ public class GameMap {
             return;
         triggerMovingAwayEvent(entity);
         removeNode(entity);
-        entity.translate(direction);
         addEntity(entity);
         triggerOverlapEvent(entity);
     }
