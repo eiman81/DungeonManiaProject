@@ -25,13 +25,4 @@ public class Arrow extends Entity implements InventoryItem {
         }
     }
 
-    @Override
-    public void onMovedAway(GameMap map, Entity entity) {
-        return;
-    }
-
-    @Override
-    public void onDestroy(GameMap gameMap) {
-        return;
-    }
 }
