@@ -12,7 +12,7 @@ import dungeonmania.entities.Switch;
 import dungeonmania.entities.inventory.InventoryItem;
 import dungeonmania.map.GameMap;
 
-public class Bomb extends Entity implements InventoryItem {
+public class Bomb extends collectables implements InventoryItem {
     public enum State {
         SPAWNED, INVENTORY, PLACED
     }
