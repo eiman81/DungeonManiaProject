@@ -1,5 +1,6 @@
 package dungeonmania.entities.playerState;
 
+import dungeonmania.battles.BattleStatistics;
 import dungeonmania.entities.Player;
 
 public class InvincibleState extends PlayerState {
@@ -8,7 +9,7 @@ public class InvincibleState extends PlayerState {
     }
 
     @Override
-    public PlayerStateType getStateType() {
-        return PlayerStateType.INVINCIBLE;
+    public BattleStatistics applyBuff(BattleStatistics origin) {
+        return BattleStatistics.applyBuff(origin, new BattleStatistics(0, 0, 0, 1, 1, true, true));
     }
 }

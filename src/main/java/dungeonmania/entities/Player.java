@@ -22,7 +22,6 @@ import dungeonmania.entities.playerState.PlayerState;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Direction;
 import dungeonmania.util.Position;
-import dungeonmania.entities.playerState.PlayerStateType;
 
 public class Player extends Entity implements Battleable {
     public static final double DEFAULT_ATTACK = 5.0;
@@ -171,12 +170,7 @@ public class Player extends Entity implements Battleable {
     }
 
     public BattleStatistics applyBuff(BattleStatistics origin) {
-        if (state.getStateType().equals(PlayerStateType.INVINCIBLE)) {
-            return BattleStatistics.applyBuff(origin, new BattleStatistics(0, 0, 0, 1, 1, true, true));
-        } else if (state.getStateType().equals(PlayerStateType.INVISIBLE)) {
-            return BattleStatistics.applyBuff(origin, new BattleStatistics(0, 0, 0, 1, 1, false, false));
-        }
-        return origin;
+        return state.applyBuff(origin);
     }
 
 }
