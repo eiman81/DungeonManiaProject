@@ -6,7 +6,7 @@ import dungeonmania.entities.inventory.InventoryItem;
 import dungeonmania.map.GameMap;
 import dungeonmania.util.Position;
 
-public class Arrow extends Entity implements InventoryItem {
+public class Arrow extends Collectables implements InventoryItem {
     public Arrow(Position position) {
         super(position);
     }
