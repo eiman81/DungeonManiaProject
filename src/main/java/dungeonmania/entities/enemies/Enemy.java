@@ -40,6 +40,7 @@ public abstract class Enemy extends Entity implements Battleable {
     @Override
     public void onDestroy(GameMap map) {
         Game g = map.getGame();
+        g.setEnemiesKilled(g.getEnemiesKilled() + 1);
         g.unsubscribe(getId());
     }
 

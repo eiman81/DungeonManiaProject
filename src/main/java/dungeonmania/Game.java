@@ -24,6 +24,7 @@ public class Game {
     private GameMap map;
     private Player player;
     private BattleFacade battleFacade;
+    private int enemiesKilled;
     private EntityFactory entityFactory;
     private boolean isInTick = false;
     public static final int PLAYER_MOVEMENT = 0;
@@ -50,6 +51,7 @@ public class Game {
         this.tickCount = 0;
         player = map.getPlayer();
         register(() -> player.onTick(tickCount), PLAYER_MOVEMENT, "potionQueue");
+        enemiesKilled = 0;
     }
 
     public Game tick(Direction movementDirection) {
@@ -202,5 +204,13 @@ public class Game {
 
     public BattleFacade getBattleFacade() {
         return battleFacade;
+    }
+
+    public int getEnemiesKilled() {
+        return enemiesKilled;
+    }
+
+    public void setEnemiesKilled(int enemiesKilled) {
+        this.enemiesKilled = enemiesKilled;
     }
 }
