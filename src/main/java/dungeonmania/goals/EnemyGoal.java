@@ -5,7 +5,7 @@ import dungeonmania.Game;
 public class EnemyGoal implements GoalStrategy {
     private int target;
 
-    public EnemyGoal(String type, Integer target) {
+    public EnemyGoal(Integer target) {
         this.target = target;
     }
 

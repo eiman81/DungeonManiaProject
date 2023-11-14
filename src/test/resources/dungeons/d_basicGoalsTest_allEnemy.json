@@ -2,7 +2,7 @@
     "entities": [
         {
             "type": "player",
-            "x": 3,
+            "x": 4,
             "y": 1
         },
         {
@@ -12,8 +12,8 @@
         },
         {
             "type": "spider",
-            "x": 5,
-            "y": 5
+            "x": 2,
+            "y": 7
         },
         {
             "type": "exit",
