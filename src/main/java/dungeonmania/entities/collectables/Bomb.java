@@ -42,8 +42,10 @@ public class Bomb extends Collectables implements InventoryItem {
         if (state != State.SPAWNED)
             return;
         if (entity instanceof Player) {
-            super.onOverlap(map, entity);
+            if (!((Player) entity).pickUp(this))
+                return;
             subs.stream().forEach(s -> s.unsubscribe(this));
+            map.destroyEntity(this);
         }
         this.state = State.INVENTORY;
     }
