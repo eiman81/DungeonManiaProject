@@ -34,6 +34,8 @@ public class Goal {
             strategy = new BouldersGoal();
         else if (type.equals("treasure"))
             strategy = new TreasureGoal(target);
+        else if (type.equals("enemies"))
+            strategy = new EnemyGoal(target);
         else if (type.equals("AND"))
             strategy = new AndGoal(goal1, goal2);
         else if (type.equals("OR"))
