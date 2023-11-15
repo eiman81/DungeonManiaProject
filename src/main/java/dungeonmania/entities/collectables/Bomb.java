@@ -51,6 +51,7 @@ public class Bomb extends Collectables implements InventoryItem {
     }
 
     public void onPutDown(GameMap map, Position p) {
+        translate(Position.calculatePositionBetween(getPosition(), p));
         map.addEntity(this);
         this.state = State.PLACED;
         List<Position> adjPosList = getPosition().getCardinallyAdjacentPositions();
