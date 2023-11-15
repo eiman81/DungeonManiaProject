@@ -259,4 +259,22 @@ public class GameMap {
     public void setGame(Game game) {
         this.game = game;
     }
+
+    public List<Position> getAvailablePositions(Entity entity, Position playerPosition, int radius) {
+        List<Position> availablePos = new ArrayList<>();
+        GameMap map = this;
+        for (int i = playerPosition.getX() - radius; i < playerPosition.getX() + radius; i++) {
+            for (int j = playerPosition.getY() - radius; j < playerPosition.getY() + radius; j++) {
+                if (Position.calculatePositionBetween(playerPosition, new Position(i, j)).magnitude() > radius)
+                    continue;
+                Position np = new Position(i, j);
+                if (!map.canMoveTo(entity, np) || np.equals(playerPosition))
+                    continue;
+                if (map.getEntities(np).stream().anyMatch(e -> e instanceof Enemy))
+                    continue;
+                availablePos.add(np);
+            }
+        }
+        return availablePos;
+    }
 }
