@@ -23,6 +23,7 @@ public class Game {
     private Goal goals;
     private GameMap map;
     private Player player;
+    private int enemiesKilled;
     private BattleFacade battleFacade;
     private EntityFactory entityFactory;
     private boolean isInTick = false;
@@ -48,6 +49,7 @@ public class Game {
         this.id = UUID.randomUUID().toString();
         map.init();
         this.tickCount = 0;
+        enemiesKilled = 0;
         player = map.getPlayer();
         register(() -> player.onTick(tickCount), PLAYER_MOVEMENT, "potionQueue");
     }
@@ -202,5 +204,13 @@ public class Game {
 
     public BattleFacade getBattleFacade() {
         return battleFacade;
+    }
+
+    public int getEnemiesKilled() {
+        return enemiesKilled;
+    }
+
+    public void setEnemiesKilled(int enemiesKilled) {
+        this.enemiesKilled = enemiesKilled;
     }
 }
