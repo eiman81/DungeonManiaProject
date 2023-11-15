@@ -2,16 +2,16 @@ package dungeonmania.entities;
 
 import dungeonmania.Game;
 import dungeonmania.entities.buildables.Bow;
+import dungeonmania.entities.buildables.BowFactory;
 import dungeonmania.entities.buildables.Shield;
+import dungeonmania.entities.buildables.ShieldFactory;
 import dungeonmania.entities.collectables.*;
-import dungeonmania.entities.collectables.Sword;
 import dungeonmania.entities.enemies.*;
 import dungeonmania.map.GameMap;
-import dungeonmania.entities.collectables.potions.InvincibilityPotion;
-import dungeonmania.entities.collectables.potions.InvisibilityPotion;
+import dungeonmania.entities.collectables.potions.InvincibilityPotionFactory;
+import dungeonmania.entities.collectables.potions.InvisibilityPotionFactory;
 import dungeonmania.util.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -21,13 +21,15 @@ import org.json.JSONObject;
 public class EntityFactory {
     private JSONObject config;
     private Random ranGen = new Random();
+    private Factory factory;
 
     public EntityFactory(JSONObject config) {
         this.config = config;
     }
 
     public Entity createEntity(JSONObject jsonEntity) {
-        return constructEntity(jsonEntity, config);
+        setFactory(jsonEntity, config);
+        return constructEntity();
     }
 
     public void spawnSpider(Game game) {
@@ -39,23 +41,10 @@ public class EntityFactory {
         int radius = 20;
         Position player = map.getPlayer().getPosition();
 
-        Spider dummySpider = buildSpider(new Position(0, 0)); // for checking possible positions
-
-        List<Position> availablePos = new ArrayList<>();
-        for (int i = player.getX() - radius; i < player.getX() + radius; i++) {
-            for (int j = player.getY() - radius; j < player.getY() + radius; j++) {
-                if (Position.calculatePositionBetween(player, new Position(i, j)).magnitude() > radius)
-                    continue;
-                Position np = new Position(i, j);
-                if (!map.canMoveTo(dummySpider, np) || np.equals(player))
-                    continue;
-                if (map.getEntities(np).stream().anyMatch(e -> e instanceof Enemy))
-                    continue;
-                availablePos.add(np);
-            }
-        }
+        Spider dummySpider = (Spider) constructEntity(new SpiderFactory(new Position(0, 0), config));
+        List<Position> availablePos = map.getAvailablePositions(dummySpider, player, radius);
         Position initPosition = availablePos.get(ranGen.nextInt(availablePos.size()));
-        Spider spider = buildSpider(initPosition);
+        Spider spider = (Spider) constructEntity(new SpiderFactory(initPosition, config));
         map.addEntity(spider);
         game.register(() -> spider.move(game), Game.AI_MOVEMENT, spider.getId());
     }
@@ -72,107 +61,99 @@ public class EntityFactory {
                 .collect(Collectors.toList());
         if (pos.size() == 0)
             return;
-        ZombieToast zt = buildZombieToast(pos.get(randGen.nextInt(pos.size())));
+
+        ZombieToast zt = (ZombieToast) constructEntity(
+                new ZombieToastFactory(pos.get(randGen.nextInt(pos.size())), config));
         map.addEntity(zt);
         game.register(() -> zt.move(game), Game.AI_MOVEMENT, zt.getId());
     }
 
-    public Spider buildSpider(Position pos) {
-        double spiderHealth = config.optDouble("spider_health", Spider.DEFAULT_HEALTH);
-        double spiderAttack = config.optDouble("spider_attack", Spider.DEFAULT_ATTACK);
-        return new Spider(pos, spiderHealth, spiderAttack);
-    }
-
-    public Player buildPlayer(Position pos) {
-        double playerHealth = config.optDouble("player_health", Player.DEFAULT_HEALTH);
-        double playerAttack = config.optDouble("player_attack", Player.DEFAULT_ATTACK);
-        return new Player(pos, playerHealth, playerAttack);
-    }
-
-    public ZombieToast buildZombieToast(Position pos) {
-        double zombieHealth = config.optDouble("zombie_health", ZombieToast.DEFAULT_HEALTH);
-        double zombieAttack = config.optDouble("zombie_attack", ZombieToast.DEFAULT_ATTACK);
-        return new ZombieToast(pos, zombieHealth, zombieAttack);
-    }
-
-    public ZombieToastSpawner buildZombieToastSpawner(Position pos) {
-        int zombieSpawnRate = config.optInt("zombie_spawn_interval", ZombieToastSpawner.DEFAULT_SPAWN_INTERVAL);
-        return new ZombieToastSpawner(pos, zombieSpawnRate);
-    }
-
-    public Mercenary buildMercenary(Position pos) {
-        double mercenaryHealth = config.optDouble("mercenary_health", Mercenary.DEFAULT_HEALTH);
-        double mercenaryAttack = config.optDouble("mercenary_attack", Mercenary.DEFAULT_ATTACK);
-        double allyAttack = config.optDouble("ally_attack", Mercenary.DEFAULT_HEALTH);
-        double allyDefence = config.optDouble("ally_defence", Mercenary.DEFAULT_ATTACK);
-        int mercenaryBribeAmount = config.optInt("bribe_amount", Mercenary.DEFAULT_BRIBE_AMOUNT);
-        int mercenaryBribeRadius = config.optInt("bribe_radius", Mercenary.DEFAULT_BRIBE_RADIUS);
-        return new Mercenary(pos, mercenaryHealth, mercenaryAttack, mercenaryBribeAmount, mercenaryBribeRadius,
-                allyAttack, allyDefence);
-    }
-
     public Bow buildBow() {
-        int bowDurability = config.optInt("bow_durability");
-        return new Bow(bowDurability);
+        return (Bow) constructEntity(new BowFactory(null, config));
     }
 
     public Shield buildShield() {
-        int shieldDurability = config.optInt("shield_durability");
-        double shieldDefence = config.optInt("shield_defence");
-        return new Shield(shieldDurability, shieldDefence);
+        return (Shield) constructEntity(new ShieldFactory(null, config));
     }
 
-    private Entity constructEntity(JSONObject jsonEntity, JSONObject config) {
+    public Entity constructEntity(Factory factory) {
+        this.factory = factory;
+        return factory.create();
+    }
+
+    public Entity constructEntity() {
+        return factory.create();
+    }
+
+    /**
+     * Sets the factory based on the type of entity
+     * @param jsonEntity
+     * @param config
+     */
+    private void setFactory(JSONObject jsonEntity, JSONObject config) {
         Position pos = new Position(jsonEntity.getInt("x"), jsonEntity.getInt("y"));
 
         switch (jsonEntity.getString("type")) {
         case "player":
-            return buildPlayer(pos);
+            factory = new PlayerFactory(pos, config);
+            break;
         case "zombie_toast":
-            return buildZombieToast(pos);
+            factory = new ZombieToastFactory(pos, config);
+            break;
         case "zombie_toast_spawner":
-            return buildZombieToastSpawner(pos);
+            factory = new ZombieToastSpawnerFactory(pos, config);
+            break;
         case "mercenary":
-            return buildMercenary(pos);
+            factory = new MercenaryFactory(pos, config);
+            break;
         case "wall":
-            return new Wall(pos);
+            factory = new WallFactory(pos, config);
+            break;
         case "boulder":
-            return new Boulder(pos);
+            factory = new BoulderFactory(pos, config);
+            break;
         case "switch":
-            return new Switch(pos);
+            factory = new SwitchFactory(pos, config);
+            break;
         case "exit":
-            return new Exit(pos);
+            factory = new ExitFactory(pos, config);
+            break;
         case "treasure":
-            return new Treasure(pos);
+            factory = new TreasureFactory(pos, config);
+            break;
         case "wood":
-            return new Wood(pos);
+            factory = new WoodFactory(pos, config);
+            break;
         case "arrow":
-            return new Arrow(pos);
+            factory = new ArrowFactory(pos, config);
+            break;
         case "bomb":
-            int bombRadius = config.optInt("bomb_radius", Bomb.DEFAULT_RADIUS);
-            return new Bomb(pos, bombRadius);
+            factory = new BombFactory(pos, config);
+            break;
         case "invisibility_potion":
-            int invisibilityPotionDuration = config.optInt("invisibility_potion_duration",
-                    InvisibilityPotion.DEFAULT_DURATION);
-            return new InvisibilityPotion(pos, invisibilityPotionDuration);
+            factory = new InvisibilityPotionFactory(pos, config);
+            break;
         case "invincibility_potion":
-            int invincibilityPotionDuration = config.optInt("invincibility_potion_duration",
-                    InvincibilityPotion.DEFAULT_DURATION);
-            return new InvincibilityPotion(pos, invincibilityPotionDuration);
+            factory = new InvincibilityPotionFactory(pos, config);
+            break;
         case "portal":
-            return new Portal(pos, ColorCodedType.valueOf(jsonEntity.getString("colour")));
+            factory = new PortalFactory(pos, jsonEntity);
+            break;
         case "sword":
-            double swordAttack = config.optDouble("sword_attack", Sword.DEFAULT_ATTACK);
-            int swordDurability = config.optInt("sword_durability", Sword.DEFAULT_DURABILITY);
-            return new Sword(pos, swordAttack, swordDurability);
+            factory = new SwordFactory(pos, config);
+            break;
         case "spider":
-            return buildSpider(pos);
+            factory = new SpiderFactory(pos, config);
+            break;
         case "door":
-            return new Door(pos, jsonEntity.getInt("key"));
+            factory = new DoorFactory(pos, jsonEntity);
+            break;
         case "key":
-            return new Key(pos, jsonEntity.getInt("key"));
+            factory = new KeyFactory(pos, jsonEntity);
+            break;
         default:
-            return null;
+            factory = null;
         }
     }
+
 }
