@@ -151,6 +151,9 @@ public class EntityFactory {
         case "key":
             factory = new KeyFactory(pos, jsonEntity);
             break;
+        case "sunstone":
+            factory = new SunstoneFactory(pos, jsonEntity);
+            break;
         default:
             factory = null;
         }
