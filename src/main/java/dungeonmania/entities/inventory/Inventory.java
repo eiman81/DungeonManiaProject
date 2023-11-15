@@ -1,7 +1,9 @@
 package dungeonmania.entities.inventory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import dungeonmania.entities.BattleItem;
@@ -9,6 +11,8 @@ import dungeonmania.entities.Entity;
 import dungeonmania.entities.EntityFactory;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.buildables.Bow;
+import dungeonmania.entities.buildables.Buildable;
+import dungeonmania.entities.buildables.Shield;
 import dungeonmania.entities.collectables.Arrow;
 import dungeonmania.entities.collectables.Key;
 import dungeonmania.entities.collectables.Sword;
@@ -44,33 +48,18 @@ public class Inventory {
         return result;
     }
 
-    public InventoryItem checkBuildCriteria(Player p, boolean remove, boolean forceShield, EntityFactory factory) {
+    public InventoryItem checkBuildCriteria(Player p, String buildableName, boolean remove, EntityFactory factory) {
+        Map<String, Buildable> buildables = new HashMap<>();
+        buildables.put("bow", new Bow());
+        buildables.put("shield", new Shield());
+        // add new buildables here
 
-        List<Wood> wood = getEntities(Wood.class);
-        List<Arrow> arrows = getEntities(Arrow.class);
-        List<Treasure> treasure = getEntities(Treasure.class);
-        List<Key> keys = getEntities(Key.class);
-
-        if (wood.size() >= 1 && arrows.size() >= 3 && !forceShield) {
+        Buildable buildable = buildables.get(buildableName);
+        if (buildable != null && buildable.canBuild(this)) {
             if (remove) {
-                items.remove(wood.get(0));
-                items.remove(arrows.get(0));
-                items.remove(arrows.get(1));
-                items.remove(arrows.get(2));
+                buildable.consumeItems(this);
             }
-            return factory.buildBow();
-
-        } else if (wood.size() >= 2 && (treasure.size() >= 1 || keys.size() >= 1)) {
-            if (remove) {
-                items.remove(wood.get(0));
-                items.remove(wood.get(1));
-                if (treasure.size() >= 1) {
-                    items.remove(treasure.get(0));
-                } else {
-                    items.remove(keys.get(0));
-                }
-            }
-            return factory.buildShield();
+            return buildable.build(factory);
         }
         return null;
     }
