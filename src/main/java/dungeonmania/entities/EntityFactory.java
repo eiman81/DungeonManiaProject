@@ -41,7 +41,7 @@ public class EntityFactory {
         int radius = 20;
         Position player = map.getPlayer().getPosition();
 
-        Spider dummySpider = (Spider) constructEntity(new SpiderFactory(new Position(0, 0), config)); // for checking possible positions
+        Spider dummySpider = (Spider) constructEntity(new SpiderFactory(new Position(0, 0), config));
         List<Position> availablePos = map.getAvailablePositions(dummySpider, player, radius);
         Position initPosition = availablePos.get(ranGen.nextInt(availablePos.size()));
         Spider spider = (Spider) constructEntity(new SpiderFactory(initPosition, config));
