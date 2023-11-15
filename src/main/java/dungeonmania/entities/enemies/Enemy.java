@@ -44,6 +44,11 @@ public abstract class Enemy extends Entity implements Battleable {
         g.unsubscribe(getId());
     }
 
+    @Override
+    public void onMovedAway(GameMap map, Entity entity) {
+        return;
+    }
+
     /**
      * set the movement strategy for the enemy
      * @param movementBehaviour
