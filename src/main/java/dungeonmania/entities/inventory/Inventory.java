@@ -15,6 +15,7 @@ import dungeonmania.entities.buildables.Buildable;
 import dungeonmania.entities.buildables.Shield;
 import dungeonmania.entities.collectables.Arrow;
 import dungeonmania.entities.collectables.Key;
+import dungeonmania.entities.collectables.Sunstone;
 import dungeonmania.entities.collectables.Sword;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Wood;
@@ -37,12 +38,13 @@ public class Inventory {
         int arrows = count(Arrow.class);
         int treasure = count(Treasure.class);
         int keys = count(Key.class);
+        int sunstones = count(Sunstone.class);
         List<String> result = new ArrayList<>();
 
         if (wood >= 1 && arrows >= 3) {
             result.add("bow");
         }
-        if (wood >= 2 && (treasure >= 1 || keys >= 1)) {
+        if (wood >= 2 && (treasure >= 1 || keys >= 1 || sunstones >= 1)) {
             result.add("shield");
         }
         return result;

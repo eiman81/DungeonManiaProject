@@ -1,8 +1,8 @@
-package dungeonmania.entities;
+package dungeonmania.entities.collectables;
 
 import org.json.JSONObject;
 
-import dungeonmania.entities.collectables.Treasure;
+import dungeonmania.entities.Factory;
 import dungeonmania.util.Position;
 
 public class TreasureFactory implements Factory {
