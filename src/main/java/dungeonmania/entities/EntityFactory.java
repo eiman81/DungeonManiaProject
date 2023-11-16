@@ -106,6 +106,9 @@ public class EntityFactory {
         case "mercenary":
             factory = new MercenaryFactory(pos, config);
             break;
+        case "assassin":
+            factory = new AssassinFactory(pos, config);
+            break;
         case "wall":
             factory = new WallFactory(pos, config);
             break;
