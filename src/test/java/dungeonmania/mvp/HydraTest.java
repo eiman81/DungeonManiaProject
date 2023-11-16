@@ -37,4 +37,8 @@ public class HydraTest {
         assertTrue(hydraMoved);
     }
 
+    private List<EntityResponse> getHydra(DungeonResponse res) {
+        return TestUtils.getEntities(res, "hydra");
+    }
+
 }
