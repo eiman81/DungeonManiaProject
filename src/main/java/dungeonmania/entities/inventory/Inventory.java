@@ -12,7 +12,9 @@ import dungeonmania.entities.EntityFactory;
 import dungeonmania.entities.Player;
 import dungeonmania.entities.buildables.Bow;
 import dungeonmania.entities.buildables.Buildable;
+import dungeonmania.entities.buildables.MidnightArmour;
 import dungeonmania.entities.buildables.Shield;
+import dungeonmania.entities.buildables.Sceptre;
 import dungeonmania.entities.collectables.Arrow;
 import dungeonmania.entities.collectables.Key;
 import dungeonmania.entities.collectables.Sunstone;
@@ -39,6 +41,7 @@ public class Inventory {
         int treasure = count(Treasure.class);
         int keys = count(Key.class);
         int sunstones = count(Sunstone.class);
+        int swords = count(Sword.class);
         List<String> result = new ArrayList<>();
 
         if (wood >= 1 && arrows >= 3) {
@@ -47,6 +50,12 @@ public class Inventory {
         if (wood >= 2 && (treasure >= 1 || keys >= 1 || sunstones >= 1)) {
             result.add("shield");
         }
+        if ((wood >= 1 || arrows >= 2) && (keys >= 1 || treasure >= 1) && (sunstones >= 1)) {
+            result.add("sceptre");
+        }
+        if (swords >= 1 && sunstones >= 1) {
+            result.add("midnight_armour");
+        }
         return result;
     }
 
@@ -54,6 +63,8 @@ public class Inventory {
         Map<String, Buildable> buildables = new HashMap<>();
         buildables.put("bow", new Bow());
         buildables.put("shield", new Shield());
+        buildables.put("sceptre", new Sceptre(10));
+        buildables.put("midnight_armour", new MidnightArmour(10, 10));
         // add new buildables here
 
         Buildable buildable = buildables.get(buildableName);
