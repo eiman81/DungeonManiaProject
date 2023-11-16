@@ -78,7 +78,7 @@ public class Assassin extends Enemy implements Interactable {
     @Override
     public void interact(Player player, Game game) {
         double temp = random.nextFloat();
-        if (temp >= bribeFailRate) {
+        if (temp > bribeFailRate) {
             allied = true;
         } else {
             allied = false;
