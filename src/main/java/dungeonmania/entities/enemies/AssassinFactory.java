@@ -15,6 +15,7 @@ public class AssassinFactory implements Factory {
     private int bribeAmount;
     private int bribeRadius;
     private double bribeFailRate;
+    private int mindControlDuration;
 
     public AssassinFactory(Position position, JSONObject config) {
         this.health = config.optDouble("assassin_health", Assassin.DEFAULT_HEALTH);
@@ -24,11 +25,13 @@ public class AssassinFactory implements Factory {
         this.bribeAmount = config.optInt("bribe_amount", Assassin.DEFAULT_BRIBE_AMOUNT);
         this.bribeRadius = config.optInt("bribe_radius", Assassin.DEFAULT_BRIBE_RADIUS);
         this.bribeFailRate = config.optDouble("bribe_fail_rate", Assassin.DEFAULT_BRIBE_FAIL_RATE);
+        this.mindControlDuration = config.optInt("mind_control_duration", Mercenary.DEFAULT_MIND_CONTROL_DURATION);
         this.position = position;
     }
 
     @Override
     public Enemy create() {
-        return new Assassin(position, health, attack, bribeAmount, bribeRadius, allyAttack, allyDefence, bribeFailRate);
+        return new Assassin(position, health, attack, bribeAmount, bribeRadius, allyAttack, allyDefence, bribeFailRate,
+                mindControlDuration);
     }
 }
