@@ -164,7 +164,7 @@ public class AssassinTest {
 
     @Test
     @Tag("18-8")
-    @DisplayName("Testing a failed bribe assassin does battle the player")
+    @DisplayName("Testing a failed bribe assassin battles the player")
     public void allyBattleReal() {
         //                                  Wall    Wall    Wall
         // P1       P2/Treasure      .      M2      M1      Wall
