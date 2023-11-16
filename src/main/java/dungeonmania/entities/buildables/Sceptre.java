@@ -12,10 +12,8 @@ import dungeonmania.entities.collectables.Key;
 import dungeonmania.entities.collectables.Sunstone;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Wood;
-import dungeonmania.entities.enemies.ZombieToast;
 import dungeonmania.entities.inventory.Inventory;
 import dungeonmania.entities.inventory.InventoryItem;
-import dungeonmania.map.GameMap;
 
 public class Sceptre extends Buildable {
     private final BuffStrategy buffStrategy;
