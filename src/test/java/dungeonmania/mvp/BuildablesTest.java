@@ -243,5 +243,4 @@ public class BuildablesTest {
         assertEquals(0, TestUtils.getInventory(res, "wood").size());
         assertEquals(0, TestUtils.getInventory(res, "sunstone").size());
     }
-
 }
