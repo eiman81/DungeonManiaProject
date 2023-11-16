@@ -3,8 +3,12 @@ package dungeonmania.entities;
 import dungeonmania.Game;
 import dungeonmania.entities.buildables.Bow;
 import dungeonmania.entities.buildables.BowFactory;
+import dungeonmania.entities.buildables.MidnightArmour;
+import dungeonmania.entities.buildables.MidnightArmourFactory;
 import dungeonmania.entities.buildables.Shield;
 import dungeonmania.entities.buildables.ShieldFactory;
+import dungeonmania.entities.buildables.Sceptre;
+import dungeonmania.entities.buildables.SceptreFactory;
 import dungeonmania.entities.collectables.*;
 import dungeonmania.entities.enemies.*;
 import dungeonmania.map.GameMap;
@@ -74,6 +78,14 @@ public class EntityFactory {
 
     public Shield buildShield() {
         return (Shield) constructEntity(new ShieldFactory(null, config));
+    }
+
+    public MidnightArmour buildMidnightArmour() {
+        return (MidnightArmour) constructEntity(new MidnightArmourFactory(null, config));
+    }
+
+    public Sceptre buildSceptre() {
+        return (Sceptre) constructEntity(new SceptreFactory(null, config));
     }
 
     public Entity constructEntity(Factory factory) {
@@ -156,6 +168,9 @@ public class EntityFactory {
             break;
         case "key":
             factory = new KeyFactory(pos, jsonEntity);
+            break;
+        case "sunstone":
+            factory = new SunstoneFactory(pos, jsonEntity);
             break;
         default:
             factory = null;
