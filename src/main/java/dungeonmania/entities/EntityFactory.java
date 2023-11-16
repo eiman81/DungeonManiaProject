@@ -121,6 +121,9 @@ public class EntityFactory {
         case "assassin":
             factory = new AssassinFactory(pos, config);
             break;
+        case "hydra":
+            factory = new HydraFactory(pos, config);
+            break;
         case "wall":
             factory = new WallFactory(pos, config);
             break;

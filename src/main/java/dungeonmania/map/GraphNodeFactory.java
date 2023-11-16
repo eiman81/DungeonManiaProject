@@ -16,6 +16,7 @@ public class GraphNodeFactory {
         case "zombie_toast_spawner":
         case "mercenary":
         case "assassin":
+        case "hydra":
         case "wall":
         case "boulder":
         case "switch":
