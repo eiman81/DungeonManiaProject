@@ -1,4 +1,8 @@
 {
+  "hydra_attack": 5,
+  "hydra_health": 15,
+  "hydra_health_increase_rate": 0.5,
+  "hydra_health_increase_amount": 3,
   "ally_attack": 3,
   "ally_defence": 3,
   "bomb_radius": 1,
