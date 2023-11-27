@@ -169,7 +169,7 @@ public class EntityFactory {
         case "key":
             factory = new KeyFactory(pos, jsonEntity);
             break;
-        case "sunstone":
+        case "sun_stone":
             factory = new SunstoneFactory(pos, jsonEntity);
             break;
         default:

@@ -189,7 +189,7 @@ public class BuildablesTest {
                 "c_BuildablesTest_DungeonResponseBuildables");
 
         assertEquals(0, TestUtils.getInventory(res, "sword").size());
-        assertEquals(0, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(0, TestUtils.getInventory(res, "sun_stone").size());
 
         // Pick up Sword
         res = dmc.tick(Direction.RIGHT);
