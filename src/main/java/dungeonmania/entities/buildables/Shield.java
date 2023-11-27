@@ -7,7 +7,7 @@ import dungeonmania.entities.EntityFactory;
 import dungeonmania.entities.buffs.BuffStrategy;
 import dungeonmania.entities.buffs.ShieldBuff;
 import dungeonmania.entities.collectables.Key;
-import dungeonmania.entities.collectables.Sunstone;
+import dungeonmania.entities.collectables.SunStone;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Wood;
 import dungeonmania.entities.inventory.Inventory;
@@ -34,7 +34,7 @@ public class Shield extends Buildable {
     @Override
     public boolean canBuild(Inventory inventory) {
         return inventory.count(Wood.class) >= 2 && (inventory.count(Treasure.class) >= 1
-                || inventory.count(Key.class) >= 1 || inventory.count(Sunstone.class) >= 1);
+                || inventory.count(Key.class) >= 1 || inventory.count(SunStone.class) >= 1);
     }
 
     @Override

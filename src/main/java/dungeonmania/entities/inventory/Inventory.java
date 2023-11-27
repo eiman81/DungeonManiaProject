@@ -17,7 +17,7 @@ import dungeonmania.entities.buildables.Shield;
 import dungeonmania.entities.buildables.Sceptre;
 import dungeonmania.entities.collectables.Arrow;
 import dungeonmania.entities.collectables.Key;
-import dungeonmania.entities.collectables.Sunstone;
+import dungeonmania.entities.collectables.SunStone;
 import dungeonmania.entities.collectables.Sword;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Wood;
@@ -40,7 +40,7 @@ public class Inventory {
         int arrows = count(Arrow.class);
         int treasure = count(Treasure.class);
         int keys = count(Key.class);
-        int sunstones = count(Sunstone.class);
+        int sunstones = count(SunStone.class);
         int swords = count(Sword.class);
         List<String> result = new ArrayList<>();
 

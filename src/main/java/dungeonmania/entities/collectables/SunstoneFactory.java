@@ -13,7 +13,7 @@ public class SunstoneFactory implements Factory {
     }
 
     @Override
-    public Sunstone create() {
-        return new Sunstone(position);
+    public SunStone create() {
+        return new SunStone(position);
     }
 }

@@ -7,7 +7,7 @@ import dungeonmania.battles.BattleStatistics;
 import dungeonmania.entities.EntityFactory;
 import dungeonmania.entities.buffs.BuffStrategy;
 import dungeonmania.entities.buffs.MidnightShieldBuff;
-import dungeonmania.entities.collectables.Sunstone;
+import dungeonmania.entities.collectables.SunStone;
 import dungeonmania.entities.collectables.Sword;
 import dungeonmania.entities.inventory.Inventory;
 import dungeonmania.entities.inventory.InventoryItem;
@@ -39,7 +39,7 @@ public class MidnightArmour extends Buildable {
 
     @Override
     public boolean canBuild(Inventory inventory) {
-        return (inventory.count(Sword.class) >= 1 && inventory.count(Sunstone.class) >= 1);
+        return (inventory.count(Sword.class) >= 1 && inventory.count(SunStone.class) >= 1);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MidnightArmour extends Buildable {
     @Override
     public void consumeItems(Inventory inventory) {
         List<Sword> swords = inventory.getEntities(Sword.class);
-        List<Sunstone> sunstones = inventory.getEntities(Sunstone.class);
+        List<SunStone> sunstones = inventory.getEntities(SunStone.class);
 
         inventory.remove(swords.get(0));
         inventory.remove(sunstones.get(0));

@@ -9,7 +9,7 @@ import dungeonmania.entities.buffs.BuffStrategy;
 import dungeonmania.entities.buffs.SceptreBuff;
 import dungeonmania.entities.collectables.Arrow;
 import dungeonmania.entities.collectables.Key;
-import dungeonmania.entities.collectables.Sunstone;
+import dungeonmania.entities.collectables.SunStone;
 import dungeonmania.entities.collectables.Treasure;
 import dungeonmania.entities.collectables.Wood;
 import dungeonmania.entities.inventory.Inventory;
@@ -43,7 +43,7 @@ public class Sceptre extends Buildable {
     public boolean canBuild(Inventory inventory) {
         return (inventory.count(Wood.class) >= 1 || inventory.count(Arrow.class) >= 2)
                 && (inventory.count(Treasure.class) >= 1 || inventory.count(Key.class) >= 1)
-                && (inventory.count(Sunstone.class) >= 1);
+                && (inventory.count(SunStone.class) >= 1);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class Sceptre extends Buildable {
         List<Wood> wood = inventory.getEntities(Wood.class);
         List<Treasure> treasure = inventory.getEntities(Treasure.class);
         List<Key> keys = inventory.getEntities(Key.class);
-        List<Sunstone> sunstones = inventory.getEntities(Sunstone.class);
+        List<SunStone> sunstones = inventory.getEntities(SunStone.class);
         List<Arrow> arrows = inventory.getEntities(Arrow.class);
 
         if (wood.size() >= 1)
