@@ -197,7 +197,7 @@ public class BuildablesTest {
 
         // Pick up sunstone
         res = dmc.tick(Direction.RIGHT);
-        assertEquals(1, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(1, TestUtils.getInventory(res, "sun_stone").size());
 
         // Build midnight armour
         assertEquals(0, TestUtils.getInventory(res, "midnight_armour").size());
@@ -219,7 +219,7 @@ public class BuildablesTest {
 
         assertEquals(0, TestUtils.getInventory(res, "key").size());
         assertEquals(0, TestUtils.getInventory(res, "wood").size());
-        assertEquals(0, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(0, TestUtils.getInventory(res, "sun_stone").size());
 
         // Pick up key
         res = dmc.tick(Direction.RIGHT);
@@ -231,7 +231,7 @@ public class BuildablesTest {
 
         // Pick up sunstone
         res = dmc.tick(Direction.RIGHT);
-        assertEquals(1, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(1, TestUtils.getInventory(res, "sun_stone").size());
 
         // Build sceptre
         assertEquals(0, TestUtils.getInventory(res, "sceptre").size());
@@ -241,6 +241,6 @@ public class BuildablesTest {
         // Materials used in construction disappear from inventory
         assertEquals(0, TestUtils.getInventory(res, "key").size());
         assertEquals(0, TestUtils.getInventory(res, "wood").size());
-        assertEquals(0, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(0, TestUtils.getInventory(res, "sun_stone").size());
     }
 }

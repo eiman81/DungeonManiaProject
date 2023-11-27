@@ -48,7 +48,7 @@ public class SunstoneTest {
         // pickup sunstone
         res = dmc.tick(Direction.LEFT);
         assertEquals(new Position(2, 3), TestUtils.getEntities(res, "player").get(0).getPosition());
-        assertEquals(1, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(1, TestUtils.getInventory(res, "sun_stone").size());
 
         res = dmc.tick(Direction.DOWN);
         assertEquals(new Position(2, 4), TestUtils.getEntities(res, "player").get(0).getPosition());
@@ -56,14 +56,14 @@ public class SunstoneTest {
         res = dmc.tick(Direction.RIGHT);
         assertEquals(new Position(3, 4), TestUtils.getEntities(res, "player").get(0).getPosition());
         // check sunstone still in inventory
-        assertEquals(1, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(1, TestUtils.getInventory(res, "sun_stone").size());
         res = dmc.tick(Direction.UP);
         assertEquals(new Position(3, 3), TestUtils.getEntities(res, "player").get(0).getPosition());
         // unlock door 2
         res = dmc.tick(Direction.RIGHT);
         assertEquals(new Position(4, 3), TestUtils.getEntities(res, "player").get(0).getPosition());
         // check sunstone still in inventory
-        assertEquals(1, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(1, TestUtils.getInventory(res, "sun_stone").size());
         // reach exit goal
         res = dmc.tick(Direction.DOWN);
         assertEquals("", TestUtils.getGoals(res));
@@ -89,7 +89,7 @@ public class SunstoneTest {
         // check inventory contains treasure
         assertEquals(1, TestUtils.getInventory(res, "treasure").size());
         // check inventory contains sunstone
-        assertEquals(1, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(1, TestUtils.getInventory(res, "sun_stone").size());
         // assert goal met
         assertEquals("", TestUtils.getGoals(res));
     }
@@ -108,7 +108,7 @@ public class SunstoneTest {
         // pickup sunstone
         res = dmc.tick(Direction.RIGHT);
         assertEquals(2, TestUtils.getInventory(res, "wood").size());
-        assertEquals(1, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(1, TestUtils.getInventory(res, "sun_stone").size());
         // Build Shield
         assertEquals(0, TestUtils.getInventory(res, "shield").size());
         res = assertDoesNotThrow(() -> dmc.build("shield"));
@@ -116,7 +116,7 @@ public class SunstoneTest {
 
         // Materials used in construction disappear from inventory except sunstone
         assertEquals(0, TestUtils.getInventory(res, "wood").size());
-        assertEquals(1, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(1, TestUtils.getInventory(res, "sun_stone").size());
     }
 
     @Test
@@ -133,7 +133,7 @@ public class SunstoneTest {
         // pickup sunstone
         res = dmc.tick(Direction.RIGHT);
         assertEquals(2, TestUtils.getInventory(res, "wood").size());
-        assertEquals(1, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(1, TestUtils.getInventory(res, "sun_stone").size());
         // Build Shield
         assertEquals(0, TestUtils.getInventory(res, "shield").size());
         res = assertDoesNotThrow(() -> dmc.build("shield"));
@@ -141,7 +141,7 @@ public class SunstoneTest {
 
         // Materials used in construction disappear from inventory except sunstone
         assertEquals(0, TestUtils.getInventory(res, "wood").size());
-        assertEquals(1, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(1, TestUtils.getInventory(res, "sun_stone").size());
 
         res = dmc.tick(Direction.DOWN);
         Position pos = TestUtils.getEntities(res, "player").get(0).getPosition();
@@ -149,6 +149,6 @@ public class SunstoneTest {
         res = dmc.tick(Direction.DOWN);
         assertNotEquals(pos, TestUtils.getEntities(res, "player").get(0).getPosition());
         // inventory still has sunstone
-        assertEquals(1, TestUtils.getInventory(res, "sunstone").size());
+        assertEquals(1, TestUtils.getInventory(res, "sun_stone").size());
     }
 }
